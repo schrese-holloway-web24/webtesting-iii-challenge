@@ -2,9 +2,11 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 import {toHaveClass} from '@testing-library/jest-dom';
-expect.extend({toHaveClass})
+
 //Component
 import Display from './Display';
+
+expect.extend({toHaveClass})
 
 test('Display renders without crashing', () => {
     render(<Display />)
