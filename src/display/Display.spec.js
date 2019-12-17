@@ -1,7 +1,8 @@
 // Test away!
 import React from 'react';
 import {render} from '@testing-library/react';
-
+import {toHaveClass} from '@testing-library/jest-dom';
+expect.extend({toHaveClass})
 //Component
 import Display from './Display';
 
@@ -32,14 +33,26 @@ test('closed is true, render closed, if closed is false, render open', () => {
 
 
 //CANNOT GET RED-LED CLASS TO WORK
-// test('locker testid should have classname red-led if locked', () => {
-//     const{getByTestId, rerender} = render(<Display locked = {true}/>)
-//     const lockerDiv = document.querySelector('[data-testid = "locker"]')
-//     expect(lockerDiv).toHaveClass('led')
-// })
+test('locker testid should have classname red-led if locked', () => {
+    render(<Display locked = {true}/>)
+    const lockerDiv = document.querySelector('[data-testid = "locker"]')
+    expect(lockerDiv).toHaveClass('led', 'red-led')
+})
 
-// test('red-led when open',() =>  {
-//     expect(getAllByTestId('locker')).toHaveClass('red-led')
+test('red-led when open',() =>  {
+    render(<Display closed /> )
+    const openerDiv = document.querySelector('[data-testid = "opener"]')
+    expect(openerDiv).toHaveClass('led', 'red-led')
+})
 
-// })
+test('locker testid should have classname green-led if not locked', () => {
+    render(<Display locked = {false}/>)
+    const lockerDiv = document.querySelector('[data-testid = "locker"]')
+    expect(lockerDiv).toHaveClass('led', 'green-led')
+})
 
+test('green-led when open',() =>  {
+    render(<Display closed = {false} /> )
+    const openerDiv = document.querySelector('[data-testid = "opener"]')
+    expect(openerDiv).toHaveClass('led', 'green-led')
+})
